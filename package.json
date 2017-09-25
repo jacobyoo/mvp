@@ -32,7 +32,8 @@
     "express-session": "^1.15.5",
     "grunt": "^1.0.1",
     "mongoose": "^4.11.13",
-    "react": "^15.6.1"
+    "react": "^15.6.1",
+    "request": "^2.82.0"
   },
   "devDependencies": {
     "babel-loader": "^7.1.2",
