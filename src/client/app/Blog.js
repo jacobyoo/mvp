@@ -6,7 +6,10 @@ import PostForm from './PostForm';
 class Blog extends Component {
   constructor(props) {
     super(props);
-    this.state = { data: [] };
+    this.state = {
+      data: [],
+      newPost: false
+    };
     this.loadBlogPosts = this.loadBlogPosts.bind(this);
     this.url = this.props.url;
   }
@@ -51,6 +54,10 @@ class Blog extends Component {
     this.loadBlogPosts();
   }
 
+  writeNewPost() {
+    this.setState({ newPost: !this.state.newPost });
+  }
+
   render() {
     return (
       <div className="container">
@@ -60,7 +67,7 @@ class Blog extends Component {
               <a className="blog-nav-item" href="#">Home</a>
               <a className="blog-nav-item" href="#">About</a>
               <a className="blog-nav-item" href="#">Archive</a>
-              <a className="blog-nav-item" href="#">Write</a>
+              <a className="blog-nav-item" href="#" onClick={this.writeNewPost.bind(this)}>Write</a>
               <a className="blog-nav-item" href="#">Log out</a>
             </nav>
           </div>
@@ -69,8 +76,14 @@ class Blog extends Component {
           <h3 className="blog-title">jacob's blog</h3>
         </div>
         <div className="container row">
+          {
+            (this.state.newPost)
+              ? <PostForm onPostSubmit={this.handlePostSubmit.bind(this)}/>
+              : null
+          }
+
           <PostList posts={this.state.data} editPost={this.handlePostEdit.bind(this)} deletePost={this.handlePostDelete.bind(this)}/>
-          <PostForm onPostSubmit={this.handlePostSubmit.bind(this)}/>
+
         </div>
       </div>
     )
