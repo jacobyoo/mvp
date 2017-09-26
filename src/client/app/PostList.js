@@ -4,7 +4,7 @@ import BlogPost from './BlogPost';
 var PostList = (props) => (
   <div className="blog-main">
     {props.posts.map(post =>
-      <BlogPost post={post} key={post._id} editPost={props.editPost} deletePost={props.deletePost}/>
+      <BlogPost post={post} key={post._id} user={props.user} editPost={props.editPost} deletePost={props.deletePost}/>
     )}
   </div>
 )

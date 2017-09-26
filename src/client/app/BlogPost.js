@@ -55,8 +55,17 @@ class BlogPost extends Component {
         </p>
         <p className="blog-post-meta">
           <em>Posted on <Time value={this.props.post.date} format="YYYY/MM/DD hh:mm A"/></em>&nbsp;
-          <a href="#" onClick={this.updatePost}>edit</a>&nbsp;
-          <a href="#" id={this.props.post._id} onClick={this.props.deletePost}>delete</a>
+          {
+            (this.props.user)
+              ? (<a href="#" onClick={this.updatePost}>edit</a>)
+              : null
+          }
+          &nbsp;
+          {
+            (this.props.user)
+              ? (<a href="#" id={this.props.post._id} onClick={this.props.deletePost}>delete</a>)
+              : null
+          }
         </p>
         { (this.state.updatePending)
           ? (<form onSubmit={this.handleUpdatePost}>

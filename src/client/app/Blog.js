@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import PostList from './PostList';
 import PostForm from './PostForm';
+import LogIn from './LogIn';
+import LoggedIn from './LoggedIn';
 
 class Blog extends Component {
   constructor(props) {
@@ -10,6 +12,8 @@ class Blog extends Component {
       data: [],
       newPost: false,
       loggingIn: false,
+      isLoggedIn: false,
+      userName: null,
       viewingArchive: false
     };
     this.loadBlogPosts = this.loadBlogPosts.bind(this);
@@ -17,8 +21,12 @@ class Blog extends Component {
     this.url = this.props.url;
   }
 
+  componentDidMount() {
+    this.loadBlogPosts();
+  }
+
   loadBlogPosts() {
-    axios.get(this.props.url)
+    axios.get(this.props.url + 'posts')
       .then(res => {
         this.setState({
           data: res.data,
@@ -31,7 +39,7 @@ class Blog extends Component {
   }
 
   loadArchive() {
-    axios.get(this.props.url + '/archive')
+    axios.get(this.props.url + 'posts/archive')
       .then(res => {
         this.setState({ data: res.data });
       })
@@ -41,7 +49,7 @@ class Blog extends Component {
   }
 
   handlePostSubmit(post) {
-    axios.post(this.props.url, post)
+    axios.post(this.props.url + 'posts', post)
       .then(this.loadBlogPosts)
       .catch(err => {
         console.log(err);
@@ -49,7 +57,7 @@ class Blog extends Component {
   }
 
   handlePostEdit(id, post) {
-    axios.put(this.props.url + '/' + id, post)
+    axios.put(this.props.url + 'posts/' + id, post)
       .then(this.loadBlogPosts)
       .catch(err => {
         console.log(err);
@@ -58,7 +66,7 @@ class Blog extends Component {
   }
 
   handlePostDelete(e) {
-    axios.delete(this.props.url + '/' + e.target.id)
+    axios.delete(this.props.url + 'posts/' + e.target.id)
       .then(this.loadBlogPosts)
       .catch(err => {
         console.log(err);
@@ -66,8 +74,30 @@ class Blog extends Component {
 
   }
 
-  componentDidMount() {
-    this.loadBlogPosts();
+  handleLogIn(user) {
+    axios.post(this.props.url + 'login', user)
+      .then(res => {
+        this.setState({
+          isLoggedIn: true,
+          userName: user.username
+        })
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+  handleLogOut() {
+    axios.get(this.props.url + 'logout')
+      .then(res => {
+        this.setState({
+          isLoggedIn: false,
+          userName: null
+        })
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   writeNewPost() {
@@ -79,18 +109,22 @@ class Blog extends Component {
     this.loadArchive();
   }
 
+  handle
+
   render() {
     return (
-      <div className="container">
+      <div>
         <div className="blog-masthead">
-          <div className="container">
-            <nav className="blog-nav">
-              <a className="blog-nav-item" href="#" onClick={this.loadBlogPosts}>Home</a>
-              <a className="blog-nav-item" href="#" onClick={this.viewArchive.bind(this)}>Archive</a>
-              <a className="blog-nav-item" href="#" onClick={this.writeNewPost.bind(this)}>Write</a>
+          <nav className="blog-nav">
+            <a className="blog-nav-item" href="#" onClick={this.loadBlogPosts}>Home</a>
+            <a className="blog-nav-item" href="#" onClick={this.viewArchive.bind(this)}>Archive</a>
+            {
+              (this.state.isLoggedIn)
+                ? <a className="blog-nav-item" href="#" onClick={this.writeNewPost.bind(this)}>Write</a>
+                : null
+            }
 
-            </nav>
-          </div>
+          </nav>
         </div>
         <div className="blog-header">
           <h3 className="blog-title">jacob's blog</h3>
@@ -102,7 +136,7 @@ class Blog extends Component {
               : null
           }
 
-          <PostList posts={this.state.data} editPost={this.handlePostEdit.bind(this)} deletePost={this.handlePostDelete.bind(this)}/>
+          <PostList posts={this.state.data} editPost={this.handlePostEdit.bind(this)} deletePost={this.handlePostDelete.bind(this)} user={this.state.userName}/>
           <nav>
             {
               (this.state.viewingArchive)
@@ -113,11 +147,11 @@ class Blog extends Component {
         </div>
         <div className="col-sm-3 col-sm-offset-1 blog-sidebar">
           <div className="sidebar-module sidebar-module-inset">
-            <form>
-              <p className="text-right"><span>id: </span> <input type="text"/></p>
-              <p className="text-right"><span>pw: </span> <input type="password"/></p>
-              <p className="text-right"><input type="submit" value="Log In"/></p>
-            </form>
+            {
+              (this.state.isLoggedIn)
+                ? <LoggedIn userName={this.state.userName} onLogOutClick={this.handleLogOut.bind(this)} />
+                : <LogIn onLogInSubmit={this.handleLogIn.bind(this)} />
+            }
           </div>
         </div>
       </div>
