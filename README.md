@@ -1,1 +1,2 @@
 # mvp
+a barebones blog
