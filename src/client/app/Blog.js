@@ -8,7 +8,7 @@ class Blog extends Component {
     super(props);
     this.state = { data: [] };
     this.loadBlogPosts = this.loadBlogPosts.bind(this);
-    this.handlePostSubmit = this.handlePostSubmit.bind(this);
+    this.url = this.props.url;
   }
 
   loadBlogPosts() {
@@ -16,10 +16,34 @@ class Blog extends Component {
       .then(res => {
         this.setState({ data: res.data });
       })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
-  handlePostSubmit() {
-    //TODO: save posts to db
+  handlePostSubmit(post) {
+    axios.post(this.props.url, post)
+      .then(this.loadBlogPosts)
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+  handlePostEdit(post_id) {
+
+  }
+
+  handlePostDelete(e) {
+    var outer = this;
+    axios.delete(this.props.url + '/' + e.target.id)
+      .then(res => {
+        console.log('post deleted');
+        outer.loadBlogPosts();
+      })
+      .catch(err => {
+        console.log(err);
+      });
+
   }
 
   componentDidMount() {
@@ -28,9 +52,14 @@ class Blog extends Component {
 
   render() {
     return (
-      <div>
-        <h3>A Tiny Blog</h3>
-        <PostList posts={this.state.data}/>
+      <div className="container">
+        <div className="blog-header">
+          <h3 className="blog-title">A Tiny Blog</h3>
+        </div>
+        <div className="container row">
+          <PostList posts={this.state.data} deletePost={this.handlePostDelete.bind(this)}/>
+          <PostForm onPostSubmit={this.handlePostSubmit.bind(this)}/>
+        </div>
       </div>
     )
   }

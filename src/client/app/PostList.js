@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import BlogPost from './BlogPost';
 
 var PostList = (props) => (
-  <div>
+  <div className="blog-main">
     {props.posts.map(post =>
-      <BlogPost post={post} key={post._id} />
+      <BlogPost post={post} key={post._id} deletePost={props.deletePost}/>
     )}
   </div>
 )
