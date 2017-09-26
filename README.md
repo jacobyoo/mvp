@@ -1,2 +1,2 @@
-# mvp
+# mvp-blog
 a barebones blog
