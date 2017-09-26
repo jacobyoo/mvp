@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Time from 'react-time';
 
 class BlogPost extends Component {
   constructor(props) {
@@ -49,7 +50,7 @@ class BlogPost extends Component {
           {this.props.post.body}
         </p>
         <p className="blog-post-meta">
-          <em>Posted {this.props.post.date}</em>&nbsp;
+          <em>Posted on <Time value={this.props.post.date} format="YYYY/MM/DD hh:mm A"/></em>&nbsp;
           <a href="#" onClick={this.updatePost}>edit</a>&nbsp;
           <a href="#" id={this.props.post._id} onClick={this.props.deletePost}>delete</a>
         </p>
