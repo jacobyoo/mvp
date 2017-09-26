@@ -5,4 +5,4 @@ iisnode.yml
 npm-debug.log
 
 node_modules
-public/dist
+bundle.js
