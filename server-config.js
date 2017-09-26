@@ -31,7 +31,11 @@ app.use('/blog', router);
 
 router.route('/posts')
   .get(handler.renderPosts)
-  .post(handler.createPost);
+  .post(handler.createPost)
+
+router.route('/posts/:post_id')
+  .put(handler.editPost)
+  .delete(handler.deletePost)
 
 
 
