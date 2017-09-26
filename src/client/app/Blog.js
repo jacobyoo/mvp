@@ -29,17 +29,18 @@ class Blog extends Component {
       });
   }
 
-  handlePostEdit(post_id) {
+  handlePostEdit(id, post) {
+    axios.put(this.props.url + '/' + id, post)
+      .then(this.loadBlogPosts)
+      .catch(err => {
+        console.log(err);
+      });
 
   }
 
   handlePostDelete(e) {
-    var outer = this;
     axios.delete(this.props.url + '/' + e.target.id)
-      .then(res => {
-        console.log('post deleted');
-        outer.loadBlogPosts();
-      })
+      .then(this.loadBlogPosts)
       .catch(err => {
         console.log(err);
       });
@@ -53,11 +54,22 @@ class Blog extends Component {
   render() {
     return (
       <div className="container">
+        <div className="blog-masthead">
+          <div className="container">
+            <nav className="blog-nav">
+              <a className="blog-nav-item" href="#">Home</a>
+              <a className="blog-nav-item" href="#">About</a>
+              <a className="blog-nav-item" href="#">Archive</a>
+              <a className="blog-nav-item" href="#">Write</a>
+              <a className="blog-nav-item" href="#">Log out</a>
+            </nav>
+          </div>
+        </div>
         <div className="blog-header">
-          <h3 className="blog-title">A Tiny Blog</h3>
+          <h3 className="blog-title">jacob's blog</h3>
         </div>
         <div className="container row">
-          <PostList posts={this.state.data} deletePost={this.handlePostDelete.bind(this)}/>
+          <PostList posts={this.state.data} editPost={this.handlePostEdit.bind(this)} deletePost={this.handlePostDelete.bind(this)}/>
           <PostForm onPostSubmit={this.handlePostSubmit.bind(this)}/>
         </div>
       </div>

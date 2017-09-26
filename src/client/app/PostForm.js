@@ -14,16 +14,13 @@ class PostForm extends Component {
 
   handleTitleChange(e) {
     this.setState({ title: e.target.value });
-    console.log('changing to ' + e.target.value);
   }
 
   handleBodyChange(e) {
     this.setState({ body: e.target.value });
-    console.log('changing to ' + e.target.value);
   }
 
   handleSubmit(e) {
-    //TODO: save new data to db
     e.preventDefault();
     let title = this.state.title.trim();
     let body = this.state.body.trim();
@@ -36,7 +33,7 @@ class PostForm extends Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <input className="form-control" type="text" placeholder="title" value={this.state.title} onChange={this.handleTitleChange}/>
-        <input className="form-control" rows="10" type="text" placeholder="body" value={this.state.body} onChange={this.handleBodyChange}/>
+        <textarea className="form-control" rows="15" type="text" placeholder="body" value={this.state.body} onChange={this.handleBodyChange}/>
         <input type="submit" value="Post"/>
       </form>
     )
