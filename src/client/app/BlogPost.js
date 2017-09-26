@@ -17,7 +17,11 @@ class BlogPost extends Component {
 
   updatePost(e) {
     e.preventDefault();
-    this.setState( {updatePending: !this.state.updatePending});
+    this.setState({
+      updatePending: !this.state.updatePending,
+      title: this.props.post.title,
+      body: this.props.post.body
+    });
   }
 
   handleUpdatePost(e) {
@@ -56,8 +60,8 @@ class BlogPost extends Component {
         </p>
         { (this.state.updatePending)
           ? (<form onSubmit={this.handleUpdatePost}>
-            <input className="form-control" type="text" value={this.props.post.title} onChange={this.handleTitleChange}/>
-            <textarea className="form-control" rows="15" type="text" value={this.props.post.body} onChange={this.handleBodyChange}/>
+            <input className="form-control" type="text" value={this.state.title} onChange={this.handleTitleChange}/>
+            <textarea className="form-control" rows="15" type="text" value={this.state.body} onChange={this.handleBodyChange}/>
             <input type="submit" value="Update"/>
           </form>)
           : null
