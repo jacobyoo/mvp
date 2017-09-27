@@ -40,6 +40,7 @@
     "passport-local-mongoose": "^4.2.1",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
+    "react-modal": "^2.3.2",
     "react-rte": "^0.15.0",
     "react-time": "^4.3.0",
     "request": "^2.82.0"

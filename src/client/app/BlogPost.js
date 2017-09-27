@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Time from 'react-time';
+import Modal from 'react-modal';
 
 class BlogPost extends Component {
   constructor(props) {
@@ -13,6 +14,7 @@ class BlogPost extends Component {
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleBodyChange = this.handleBodyChange.bind(this);
     this.handleUpdatePost = this.handleUpdatePost.bind(this);
+    this.closeModal = this.closeModal.bind(this);
   }
 
   updatePost(e) {
@@ -21,6 +23,12 @@ class BlogPost extends Component {
       updatePending: !this.state.updatePending,
       title: this.props.post.title,
       body: this.props.post.body
+    });
+  }
+
+  closeModal() {
+    this.setState({
+      updatePending: false
     });
   }
 
@@ -67,14 +75,25 @@ class BlogPost extends Component {
               : null
           }
         </p>
-        { (this.state.updatePending)
-          ? (<form onSubmit={this.handleUpdatePost}>
+        <Modal
+          isOpen={this.state.updatePending}
+          onRequestClose={this.closeModal}
+          style={{
+            content : {
+              top                   : '10%',
+              left                  : '10%',
+              right                 : '10%',
+              bottom                : '50%'
+            }
+          }}
+          contentLabel="Update Post"
+        >
+          (<form onSubmit={this.handleUpdatePost}>
             <input className="form-control" type="text" value={this.state.title} onChange={this.handleTitleChange}/>
             <textarea className="form-control" rows="15" type="text" value={this.state.body} onChange={this.handleBodyChange}/>
             <input type="submit" value="Update"/>
-          </form>)
-          : null
-        }
+          </form>
+        </Modal>
       </div>
     )
   }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Modal from 'react-modal';
 import axios from 'axios';
 import PostList from './PostList';
 import PostForm from './PostForm';
@@ -11,7 +12,6 @@ class Blog extends Component {
     this.state = {
       data: [],
       newPost: false,
-      loggingIn: false,
       isLoggedIn: false,
       userName: null,
       viewingArchive: false
@@ -51,6 +51,7 @@ class Blog extends Component {
   handlePostSubmit(post) {
     axios.post(this.props.url + 'posts', post)
       .then(this.loadBlogPosts)
+      .then(this.setState({ newPost: false }))
       .catch(err => {
         console.log(err);
       });
@@ -130,11 +131,22 @@ class Blog extends Component {
           <h3 className="blog-title">jacob's blog</h3>
         </div>
         <div className="col-sm-8 container row">
-          {
-            (this.state.newPost)
-              ? <PostForm onPostSubmit={this.handlePostSubmit.bind(this)}/>
-              : null
-          }
+          <Modal
+            isOpen={this.state.newPost}
+            onRequestClose={this.writeNewPost.bind(this)}
+            style={{
+              content : {
+                top                   : '10%',
+                left                  : '10%',
+                right                 : '10%',
+                bottom                : '50%'
+              }
+            }}
+            contentLabel="Write Post"
+          >
+            <PostForm onPostSubmit={this.handlePostSubmit.bind(this)}/>
+          </Modal>
+
 
           <PostList posts={this.state.data} editPost={this.handlePostEdit.bind(this)} deletePost={this.handlePostDelete.bind(this)} user={this.state.userName}/>
           <nav>
