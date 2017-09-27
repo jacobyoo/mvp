@@ -8,7 +8,7 @@ class LoggedIn extends Component {
   render() {
     return (
       <div className="login-status">
-        Logged In as <strong>{this.props.userName}</strong> <button onClick={this.props.onLogOutClick}>Log Out</button>
+        Logged In as <strong>{this.props.userName}</strong> <button className="btn btn-primary btn-xs" onClick={this.props.onLogOutClick}>Log Out</button>
       </div>
     )
   }

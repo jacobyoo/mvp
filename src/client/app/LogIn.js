@@ -31,7 +31,7 @@ class LogIn extends Component {
         <form onSubmit={this.handleLogIn.bind(this)}>
           <label>username: </label> <input type="text" onChange={this.handleUserName}/>&nbsp;&nbsp;
           <label>password: </label> <input type="password" onChange={this.handlePassword}/>&nbsp;
-          <input type="submit" value="Log In"/>
+          <input type="submit" className="btn btn-primary btn-xs" value="Log In"/>
         </form>
       </div>
     )

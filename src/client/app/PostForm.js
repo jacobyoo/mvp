@@ -35,7 +35,7 @@ class PostForm extends Component {
       <form onSubmit={this.handleSubmit}>
         <input className="form-control" type="text" placeholder="title" value={this.state.title} onChange={this.handleTitleChange}/>
         <ReactQuill value={this.state.body} onChange={this.handleBodyChange}/>
-        <input type="submit" value="Post"/>
+        <input type="submit" className="btn btn-primary btn-m" value="Post"/>
       </form>
     )
   }

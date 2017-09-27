@@ -94,7 +94,7 @@ class BlogPost extends Component {
           <form onSubmit={this.handleUpdatePost}>
             <input className="form-control" type="text" value={this.state.title} onChange={this.handleTitleChange}/>
             <ReactQuill value={this.state.body} onChange={this.handleBodyChange} />
-            <input type="submit" value="Update"/>
+            <input type="submit" className="btn btn-primary btn-m" value="Update"/>
           </form>
         </Modal>
       </div>
