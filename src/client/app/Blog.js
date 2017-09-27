@@ -127,6 +127,13 @@ class Blog extends Component {
 
           </nav>
         </div>
+        <div>
+          {
+            (this.state.isLoggedIn)
+              ? <LoggedIn userName={this.state.userName} onLogOutClick={this.handleLogOut.bind(this)} />
+              : <LogIn onLogInSubmit={this.handleLogIn.bind(this)} />
+          }
+        </div>
         <div className="blog-header">
           <h3 className="blog-title">jacob's blog</h3>
         </div>
@@ -156,15 +163,6 @@ class Blog extends Component {
                 : <p className="text-center"><a href="#" onClick={this.viewArchive.bind(this)}>Archived Posts</a></p>
             }
           </nav>
-        </div>
-        <div className="col-sm-3 col-sm-offset-1 blog-sidebar">
-          <div className="sidebar-module sidebar-module-inset">
-            {
-              (this.state.isLoggedIn)
-                ? <LoggedIn userName={this.state.userName} onLogOutClick={this.handleLogOut.bind(this)} />
-                : <LogIn onLogInSubmit={this.handleLogIn.bind(this)} />
-            }
-          </div>
         </div>
       </div>
     )

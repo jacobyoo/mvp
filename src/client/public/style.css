@@ -27,6 +27,10 @@ h6, .h6 {
   overflow-x: scroll;
 }
 
+.login-status {
+  float: right;
+}
+
 
 /*
  * Override Bootstrap's default container.

@@ -27,11 +27,11 @@ class LogIn extends Component {
 
   render() {
     return (
-      <div className="sidebar-module sidebar-module-inset">
+      <div className="login-status">
         <form onSubmit={this.handleLogIn.bind(this)}>
-          <p className="text-right"><label>id: </label> <input type="text" onChange={this.handleUserName}/></p>
-          <p className="text-right"><label>pw: </label> <input type="password" onChange={this.handlePassword}/></p>
-          <p className="text-right"><input type="submit" value="Log In"/></p>
+          <label>username: </label> <input type="text" onChange={this.handleUserName}/>&nbsp;&nbsp;
+          <label>password: </label> <input type="password" onChange={this.handlePassword}/>&nbsp;
+          <input type="submit" value="Log In"/>
         </form>
       </div>
     )
