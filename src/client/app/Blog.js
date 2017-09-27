@@ -106,7 +106,7 @@ class Blog extends Component {
   }
 
   viewArchive() {
-    this.setState({ viewingArchive: !this.state.viewingArchive });
+    this.setState({ viewingArchive: true });
     this.loadArchive();
   }
 
