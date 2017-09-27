@@ -116,7 +116,7 @@ class Blog extends Component {
     return (
       <div>
         <div className="blog-header">
-          <h3 className="blog-title">mumblr.</h3>
+          <h3 className="blog-title">mvmblr.</h3>
         </div>
         <div className="blog-masthead">
           <nav className="blog-nav">
