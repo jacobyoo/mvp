@@ -115,6 +115,9 @@ class Blog extends Component {
   render() {
     return (
       <div>
+        <div className="blog-header">
+          <h3 className="blog-title">mumblr.</h3>
+        </div>
         <div className="blog-masthead">
           <nav className="blog-nav">
             <a className="blog-nav-item" href="#" onClick={this.loadBlogPosts}>Home</a>
@@ -133,9 +136,6 @@ class Blog extends Component {
               ? <LoggedIn userName={this.state.userName} onLogOutClick={this.handleLogOut.bind(this)} />
               : <LogIn onLogInSubmit={this.handleLogIn.bind(this)} />
           }
-        </div>
-        <div className="blog-header">
-          <h3 className="blog-title">jacob's blog</h3>
         </div>
         <div className="col-sm-8 container row">
           <Modal
