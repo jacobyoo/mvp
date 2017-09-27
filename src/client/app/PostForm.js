@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactQuill from 'react-quill';
 
 class PostForm extends Component {
   constructor(props) {
@@ -16,14 +17,14 @@ class PostForm extends Component {
     this.setState({ title: e.target.value });
   }
 
-  handleBodyChange(e) {
-    this.setState({ body: e.target.value });
+  handleBodyChange(value) {
+    this.setState({ body: value });
   }
 
   handleSubmit(e) {
     e.preventDefault();
     let title = this.state.title.trim();
-    let body = this.state.body.trim();
+    let body = this.state.body.toString('html');
 
     this.props.onPostSubmit({ title: title, body: body });
     this.setState({ title: '', body: '' });
@@ -33,7 +34,7 @@ class PostForm extends Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <input className="form-control" type="text" placeholder="title" value={this.state.title} onChange={this.handleTitleChange}/>
-        <textarea className="form-control" rows="15" type="text" placeholder="body" value={this.state.body} onChange={this.handleBodyChange}/>
+        <ReactQuill value={this.state.body} onChange={this.handleBodyChange}/>
         <input type="submit" value="Post"/>
       </form>
     )

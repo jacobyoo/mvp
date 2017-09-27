@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import Time from 'react-time';
 import Modal from 'react-modal';
+import ReactQuill from 'react-quill';
+import Parser from 'html-react-parser';
+
 
 class BlogPost extends Component {
   constructor(props) {
@@ -50,31 +53,31 @@ class BlogPost extends Component {
     this.setState({ title: e.target.value });
   }
 
-  handleBodyChange(e) {
-    this.setState({ body: e.target.value });
+  handleBodyChange(value) {
+    this.setState({ body: value });
   }
 
   render() {
     return (
       <div className="blog-post">
         <h3 className="blog-post-title">{this.props.post.title}</h3>
-        <p>
-          {this.props.post.body}
-        </p>
-        <p className="blog-post-meta">
-          <em>Posted on <Time value={this.props.post.date} format="YYYY/MM/DD hh:mm A"/></em>&nbsp;
-          {
-            (this.props.user)
-              ? (<a href="#" onClick={this.updatePost}>edit</a>)
-              : null
-          }
-          &nbsp;
-          {
-            (this.props.user)
-              ? (<a href="#" id={this.props.post._id} onClick={this.props.deletePost}>delete</a>)
-              : null
-          }
-        </p>
+        <div className="blog-post">
+          {Parser(this.props.post.body)}
+          <p className="blog-post-meta">
+            <em>Posted on <Time value={this.props.post.date} format="YYYY/MM/DD hh:mm A"/></em>&nbsp;
+            {
+              (this.props.user)
+                ? (<a href="#" onClick={this.updatePost}>edit</a>)
+                : null
+            }
+            &nbsp;
+            {
+              (this.props.user)
+                ? (<a href="#" id={this.props.post._id} onClick={this.props.deletePost}>delete</a>)
+                : null
+            }
+          </p>
+        </div>
         <Modal
           isOpen={this.state.updatePending}
           onRequestClose={this.closeModal}
@@ -88,14 +91,15 @@ class BlogPost extends Component {
           }}
           contentLabel="Update Post"
         >
-          (<form onSubmit={this.handleUpdatePost}>
+          <form onSubmit={this.handleUpdatePost}>
             <input className="form-control" type="text" value={this.state.title} onChange={this.handleTitleChange}/>
-            <textarea className="form-control" rows="15" type="text" value={this.state.body} onChange={this.handleBodyChange}/>
+            <ReactQuill value={this.state.body} onChange={this.handleBodyChange} />
             <input type="submit" value="Update"/>
           </form>
         </Modal>
       </div>
     )
+
   }
 }
 
